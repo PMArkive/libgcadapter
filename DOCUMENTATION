@@ -22,6 +22,7 @@
       Returns - Nothing.
       
       Defined in libgcadapter.h
+      
 
   gc_pad_poll(gc_adapter_t* adapter, int port, gc_pad_state_t* state)
   
@@ -35,6 +36,7 @@
       Returns - Nothing.
       
       Defined in libgcadapter.h
+      
 
   gc_pad_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble)
   
