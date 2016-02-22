@@ -19,9 +19,12 @@ gc_pad_t;
 
 typedef struct
 {
+	/* public */
     bool open;
     gc_pad_t pad[GC_ADAPTER_PORTS];
     uint8_t rumble[GC_ADAPTER_PORTS];
+    
+    /* private, don't use these */
     uint8_t usb_recv_data[GC_ADAPTER_PAYLOAD_SIZE];
     void* usb_context;
     void* usb_device_handle;
