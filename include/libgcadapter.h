@@ -6,9 +6,9 @@
 
 typedef enum
 {
-	GC_PAD_NONE = 0,
-	GC_PAD_WIRED = 1,
-	GC_PAD_WIRELESS = 2
+    GC_PAD_NONE = 0,
+    GC_PAD_WIRED = 1,
+    GC_PAD_WIRELESS = 2
 }
 gc_pad_t;
 
@@ -19,14 +19,14 @@ gc_pad_t;
 
 typedef struct
 {
-	bool open;
-	gc_pad_t pad[GC_ADAPTER_PORTS];
-	uint8_t rumble[GC_ADAPTER_PORTS];
-	uint8_t usb_recv_data[GC_ADAPTER_PAYLOAD_SIZE];
-	void* usb_context;
-	void* usb_device_handle;
-	uint8_t usb_endpoint_read;
-	uint8_t usb_endpoint_write;
+    bool open;
+    gc_pad_t pad[GC_ADAPTER_PORTS];
+    uint8_t rumble[GC_ADAPTER_PORTS];
+    uint8_t usb_recv_data[GC_ADAPTER_PAYLOAD_SIZE];
+    void* usb_context;
+    void* usb_device_handle;
+    uint8_t usb_endpoint_read;
+    uint8_t usb_endpoint_write;
 }
 gc_adapter_t;
 
