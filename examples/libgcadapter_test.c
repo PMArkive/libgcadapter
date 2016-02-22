@@ -18,11 +18,15 @@ int main(int argc, char** argv)
 {
     int port = 0;
     
+    initscr();
+    
+    printw("libgcadapter Test Tool\n");
+    
     if(argc >= 2 && !strcmp(argv[1], "--help"))
     {
-        printf("libgcadapter\n");
-        printf("  --help: Show this text.\n");
-        printf("  --port [1-4]: The port to poll.\n");
+        printw("  --help Show this text.\n");
+        printw("  --port [1-4] The port to poll.\n");
+        refresh();
         return 0;
     }
     
@@ -31,14 +35,13 @@ int main(int argc, char** argv)
         port = atoi(argv[2]) - 1;
         if(port < 0 || port > 3)
         {
-            printf("Invalid port specified (%i).\n", port + 1);
+            printw("Invalid port specified (%i).\n", port + 1);
+            refresh();
             return -1;
         }
     }
     
     gc_adapter_t* adapter;
-    
-    initscr();
     
     if(gc_adapter_initialize(&adapter))
     {
@@ -92,7 +95,7 @@ int main(int argc, char** argv)
     }
     else
     {
-        printw("GC adapter initialization successful.\n");
+        printw("GC adapter initialization failed.\n");
     }
     
     endwin();
