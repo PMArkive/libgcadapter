@@ -70,7 +70,6 @@ void gc_try_open_usb(gc_adapter_t* adapter, libusb_device* device)
     if (ret_libusb == 0) 
     {
         libusb_device_handle* handle = adapter->usb_device_handle;
-        
 #ifdef __linux__
         if(libusb_kernel_driver_active(handle, 0) != 0)
         {
