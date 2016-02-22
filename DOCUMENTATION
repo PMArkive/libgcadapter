@@ -14,8 +14,9 @@
 
   gc_adapter_update(gc_adapter_t* adapter)
 
-      Updates the status of the adapter (adapter->open and adapter->pad).
+      Updates the status of the adapter (adapter->open).
       This function is responsible for claiming the USB interface to the adapter and for checking if the adapter is still open.
+      Please note that this does not update adapter->pad, as that is done when the adapter is polled for input.
       
       adapter - The adapter which should be updated.
       
@@ -27,6 +28,7 @@
   gc_pad_poll(gc_adapter_t* adapter, int port, gc_pad_state_t* state)
   
       Polls the state of the pad located at port.
+      This function updates the pad statuses at adapter->pad. This is not done in gc_adapter_update due to technical limitations.
       This function will always empty out the state, even if the adapter is not open or no pad is plugged into the specified port.
       This function should ideally be called on a separate thread to maximize performance.
       
@@ -89,7 +91,7 @@
 
   GC_PAD_STATES_EQUAL(st1, st2)
   
-      Expands to a statement which determines if the st1 is equal to st2.
+      Expands to a statement which determines if st1 is equal to st2.
       
       Defined in gctypes.h
 
