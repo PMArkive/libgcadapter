@@ -7,7 +7,7 @@
       
       adapter - The new adapter instance.
       
-      Return - If initialization of the adapter instance succeeded.
+      Returns - If initialization of the adapter instance succeeded.
 
       Defined in libgcadapter.h
 
@@ -53,6 +53,7 @@
   gc_adapter_free(gc_adapter_t* adapter)
   
       Frees all resources used by the adapter and closes all open USB connections.
+      This should only be called if the call to gc_adapter_initialize succeeded.
       
       adapter - The adapter to free.
       
