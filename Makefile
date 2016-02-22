@@ -1,4 +1,7 @@
-all: libgcadapter_shared libgcadapter_static libgcadapter_test
+all: bin_dir libgcadapter_shared libgcadapter_static libgcadapter_test
+
+bin_dir:
+	-mkdir bin
 
 libgcadapter_shared: libgcadapter.o
 	gcc -shared -o bin/libgcadapter.so src/libgcadapter.o
@@ -21,3 +24,4 @@ clean:
 	-rm bin/libgcadapter.a
 	-rm bin/libgcadapter.so
 	-rm bin/libgcadapter_test
+	-rmdir bin
