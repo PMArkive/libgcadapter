@@ -39,7 +39,7 @@ gc_pad_btn_t;
         st1.c_stick.x == st2.c_stick.x && \
         st1.c_stick.y == st2.c_stick.y && \
         st1.triggers.x == st2.triggers.x && \
-        st1.triggers.y == st2.triggers.y;
+        st1.triggers.y == st2.triggers.y
 
 typedef struct
 {
