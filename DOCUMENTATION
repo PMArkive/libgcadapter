@@ -16,6 +16,8 @@
 
       Updates the status of the adapter (adapter->open).
       This function is responsible for claiming the USB interface to the adapter and for checking if the adapter is still open.
+      This function should not be called too often, as it enumerates the entire USB device list every time it is called.
+      Around once a second would be ideal.
       Please note that this does not update adapter->pad, as that is done when the adapter is polled for input.
       
       adapter - The adapter which should be updated.
