@@ -18,9 +18,7 @@ int main(int argc, char** argv)
 {
     int port = 0;
     
-    initscr();
-    
-    printf("libgcadapter Test Tool\n");
+    printf("libgcadapter Test Tool (libgcadapter %s).\n", LIBGCADAPTER_VERSION_STR);
     
     if(gc_adapter_get_version() != LIBGCADAPTER_VERSION)
     {
@@ -43,13 +41,16 @@ int main(int argc, char** argv)
             printf("Invalid port specified (%i).\n", port + 1);
             return -1;
         }
-    }
+    }    
+        
+    initscr();
     
     gc_adapter_t* adapter;
     
     if(gc_adapter_initialize(&adapter))
     {
         signal(SIGINT, sigint);
+        printw("libgcadapter Test Tool (libgcadapter %s).\n", LIBGCADAPTER_VERSION_STR);
         printw("GC adapter initialization successful.\n");
         
         gc_pad_state_t state;
