@@ -20,13 +20,18 @@ int main(int argc, char** argv)
     
     initscr();
     
-    printw("libgcadapter Test Tool\n");
+    printf("libgcadapter Test Tool\n");
+    
+    if(gc_adapter_get_version() != LIBGCADAPTER_VERSION)
+    {
+        printf("Invalid library version.\n");
+        return 0;
+    }
     
     if(argc >= 2 && !strcmp(argv[1], "--help"))
     {
-        printw("  --help Show this text.\n");
-        printw("  --port [1-4] The port to poll.\n");
-        refresh();
+        printf("  --help Show this text.\n");
+        printf("  --port [1-4] The port to poll.\n");
         return 0;
     }
     
@@ -35,8 +40,7 @@ int main(int argc, char** argv)
         port = atoi(argv[2]) - 1;
         if(port < 0 || port > 3)
         {
-            printw("Invalid port specified (%i).\n", port + 1);
-            refresh();
+            printf("Invalid port specified (%i).\n", port + 1);
             return -1;
         }
     }

@@ -1,6 +1,15 @@
 -- FUNCTIONS --
 
 
+  gc_adapter_get_version()
+
+      Returns the version of the current instance of libgcadapter.
+      
+      Returns - The version of libgcadapter.
+
+      Defined in libgcadapter.h (1.0.1)
+      
+
   gc_adapter_initialize(gc_adapter_t** adapter)
 
       Initializes the USB interface and creates a new adapter instance.
@@ -9,7 +18,7 @@
       
       Returns - If initialization of the adapter instance succeeded.
 
-      Defined in libgcadapter.h
+      Defined in libgcadapter.h (1.0)
 
 
   gc_adapter_update(gc_adapter_t* adapter)
@@ -24,7 +33,7 @@
       
       Returns - Nothing.
       
-      Defined in libgcadapter.h
+      Defined in libgcadapter.h (1.0)
       
 
   gc_pad_poll(gc_adapter_t* adapter, int port, gc_pad_state_t* state)
@@ -39,7 +48,7 @@
       
       Returns - Nothing.
       
-      Defined in libgcadapter.h
+      Defined in libgcadapter.h (1.0)
       
 
   gc_pad_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble)
@@ -51,7 +60,7 @@
       
       Returns - Nothing.
       
-      Defined in libgcadapter.h
+      Defined in libgcadapter.h (1.0)
 
 
   gc_adapter_free(gc_adapter_t* adapter)
@@ -63,8 +72,61 @@
       
       Returns - Nothing.
       
-      Defined in libgcadapter.h
+      Defined in libgcadapter.h (1.0)
+      
+      
+-- DEFINES --
 
+
+  GC_PAD_STICK_CENTER
+  
+      The value of a stick axis coordinate when it is completely centered.
+      Do note that the axises on a real GameCube controller are almost never completely centered.
+      
+      Defined in gctypes.h (1.0)
+      
+      
+  LIBGCADAPTER_VERSION
+  
+      The version of the libgcadapter header. This should match the value returned by gc_adapter_get_version().
+      
+      Defined in libgcadapter.h (1.0.1)
+      
+      
+  LIBGCADAPTER_VERSION_STR
+  
+      The version of the libgcadapter header as a string.
+      
+      Defined in libgcadapter.h (1.0.1)
+      
+      
+  GC_ADAPTER_USB_VID
+  
+      The USB vendor id of the Wii U GameCube Adapter.
+      
+      Defined in libgcadapter.h (1.0)
+      
+      
+  GC_ADAPTER_USB_PID
+  
+      The USB product id of the Wii U GameCube Adapter.
+      
+      Defined in libgcadapter.h (1.0)
+      
+      
+  GC_ADAPTER_PORTS
+  
+      The number of ports on a Wii U GameCube Adapter. This will always equal 4.
+      
+      Defined in libgcadapter.h (1.0)
+      
+      
+  GC_ADAPTER_PAYLOAD_SIZE
+  
+      The maximum size of a USB payload as returned by the Wii U GameCube adapter.
+      
+      Defined in libgcadapter.h (1.0)
+      
 
 -- MACROS --
 
@@ -94,6 +156,21 @@
   GC_PAD_STATES_EQUAL(st1, st2)
   
       Expands to a statement which determines if st1 is equal to st2.
+      
+      Defined in gctypes.h
+      
+      
+  GC_PAD_AXIS_CENTERED(axis)
+  
+      Expands to a statement which determines if axis is COMPLETELY centered.
+      Do note that the axises on a real GameCube controller are almost never completely centered.
+      
+      Defined in gctypes.h
+      
+      
+  GC_PAD_AXISES_EQUAL(ax1, ax2)
+  
+      Expands to a statement which determines if ax1 is equal to ax2.
       
       Defined in gctypes.h
 

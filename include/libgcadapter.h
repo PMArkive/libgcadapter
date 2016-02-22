@@ -4,6 +4,9 @@
 #ifndef LIBGCADAPTER_H
 #define LIBGCADAPTER_H
 
+#define LIBGCADAPTER_VERSION 101
+#define LIBGCADAPTER_VERSION_STR "1.0.1"
+
 typedef enum
 {
     GC_PAD_NONE = 0,
@@ -34,6 +37,7 @@ typedef struct
 }
 gc_adapter_t;
 
+int gc_adapter_get_version();
 bool gc_adapter_initialize(gc_adapter_t** adapter);
 void gc_adapter_update(gc_adapter_t* adapter);
 void gc_pad_poll(gc_adapter_t* adapter, int port, gc_pad_state_t* state);

@@ -21,7 +21,19 @@ typedef enum
 } 
 gc_pad_btn_t;
 
+typedef struct
+{
+    uint8_t x, y;
+} 
+gc_pad_axis_t;
+
+#define GC_PAD_STICK_CENTER 128
+
 #define GC_PAD_BTN_DOWN(state, btn) (state.buttons & btn) == btn
+
+#define GC_PAD_AXIS_CENTERED(axis) \
+        axis.x == GC_PAD_STICK_CENTER && \
+        axis.Y == GC_PAD_STICK_CENTER
 
 #define GC_PAD_RESET_STATE(state) \
         state.buttons = 0; \
@@ -40,14 +52,10 @@ gc_pad_btn_t;
         st1.c_stick.y == st2.c_stick.y && \
         st1.triggers.x == st2.triggers.x && \
         st1.triggers.y == st2.triggers.y
-
-typedef struct
-{
-    uint8_t x, y;
-} 
-gc_pad_axis_t;
-
-#define GC_PAD_STICK_CENTER 128
+        
+#define GC_PAD_AXISES_EQUAL(ax1, ax2) \
+        ax1.x == ax2.x && \
+        ax1.y == ax2.y &&
 
 typedef struct
 {

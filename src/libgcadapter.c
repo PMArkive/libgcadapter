@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+int gc_adapter_get_version()
+{
+    return LIBGCADAPTER_VERSION;
+}
+
 bool gc_adapter_initialize(gc_adapter_t** adapter)
 {
     *adapter = malloc(sizeof(gc_adapter_t));
