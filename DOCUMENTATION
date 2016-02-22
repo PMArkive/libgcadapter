@@ -29,9 +29,9 @@
 
   gc_pad_poll(gc_adapter_t* adapter, int port, gc_pad_state_t* state)
   
-      Polls the state of the pad located at port.
-      This function updates the pad statuses at adapter->pad. This is not done in gc_adapter_update due to technical limitations.
-      This function will always empty out the state, even if the adapter is not open or no pad is plugged into the specified port.
+      Polls the state of the controller located at port.
+      This function updates the types of controllers at adapter->pad. This is not done in gc_adapter_update due to technical limitations.
+      This function will always empty out the state, even if the adapter is not open or no controller is plugged into the specified port.
       This function should ideally be called on a separate thread to maximize performance.
       
       adapter - The adapter to poll from.
@@ -96,5 +96,82 @@
       Expands to a statement which determines if st1 is equal to st2.
       
       Defined in gctypes.h
+
+
+-- TYPES --
+
+
+  gc_pad_btn_t
+  
+      Definition of a button on a GameCube controller.
+      Used as a bitfield when determining what buttons are held down in a gc_pad_state_t.
+      
+      GC_PAD_BTN_DPAD_LEFT - The left d-pad button.
+      GC_PAD_BTN_DPAD_RIGHT - The right d-pad button.
+      GC_PAD_BTN_DPAD_UP - The topmost d-pad button.
+      GC_PAD_BTN_DPAD_DOWN - The bottommost d-pad button.
+      GC_PAD_BTN_Z - The Z trigger button.
+      GC_PAD_BTN_L - The L trigger button, which is held down if the trigger axis goes over ~200.
+      GC_PAD_BTN_R - The R trigger button, which is held down if the trigger axis goes over ~200.
+      GC_PAD_BTN_A - The A button.
+      GC_PAD_BTN_B - The B button.
+      GC_PAD_BTN_X - The X button.
+      GC_PAD_BTN_Y - The Y button.
+      GC_PAD_BTN_START - The start button.
+      
+      Defined in gctypes.h
+      
+      
+  gc_pad_axis_t
+  
+      Definition of an axis on a GameCube controller.
+      Contains two byte values, x and y, which can be used to determine the rotation of the axis.
+      The trigger axis maps L to x and R to y, and goes from 0 to 255, which determines how held down the trigger is.
+      Stick axises map the horizontal value to x and the vertical value to y, and goes 
+      from GC_PAD_STICK_CENTER to 0 and 255, which determines in what direction and how much the stick is held.
+      
+      Defined in gctypes.h
+      
+      
+  gc_pad_state_t
+  
+      Contains the full state of a GameCube controller at a point in time.
+      
+      buttons - A bitfield indicating which buttons are held down on the controller
+                (should be accessed via GC_PAD_BTN_DOWN(state, btn)).
+      stick - The stick axis.
+      c_stick - The c-stick axis.
+      triggers - The L and R trigger.
+      
+      Defined in gctypes.h
+
+
+  gc_pad_t
+  
+      Determines the type of a controller in an adapter port.
+      Do note that only wired controllers can be used with gc_pad_set_rumble(adapter, port, rumble).
+      
+      GC_PAD_NONE - No controller is plugged into this port.
+      GC_PAD_WIRED - A wired controller is plugged into this port.
+      GC_PAD_WIRELESS - A wireless controller is plugged into this port.
+      
+      Defined in libgcadapter.h
+      
+      
+  gc_adapter_t
+  
+      An instance of a Wii U GameCube Adapter.
+      This structure contains many values, but the only ones which should be directly accessed
+      by external applications are adapter->open, adapter->pad and adapter->rumble. The other
+      values are used for keeping track of open USB connections and other state.
+      
+      open - If this adapter instance has an open USB connection to an adapter.
+      pad - An array which states what type of controller is plugged into the ports on the adapter.
+            This should be accessed in the range of 0 to GC_ADAPTER_PORTS-1.
+      rumble - Determines the current rumbling of a controller in a port. 
+               This should not be modified directly, but should be set via gc_pad_set_rumble(adapter, port, rumble). 
+               This should be accessed in the range of 0 to GC_ADAPTER_PORTS-1.
+      
+      Defined in libgcadapter.h
 
 
