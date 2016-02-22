@@ -19,7 +19,7 @@ gc_pad_t;
 
 typedef struct
 {
-	/* public */
+    /* public */
     bool open;
     gc_pad_t pad[GC_ADAPTER_PORTS];
     uint8_t rumble[GC_ADAPTER_PORTS];
