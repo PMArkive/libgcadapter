@@ -13,7 +13,7 @@ Initialize the adapter with `gc_adapter_initialize`, then update the status (`gc
 It is advised to run `gc_pad_poll` on a separate thread to maximize performance.
 
 
-Full documentation can be found in `DOCUMENTATION.md`.
+Full documentation can be found in `DOCUMENTATION`.
 
 
 # Building on Linux
