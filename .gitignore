@@ -30,3 +30,5 @@
 
 # Debug files
 *.dSYM/
+
+libgcadapter_test
