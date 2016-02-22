@@ -1,7 +1,7 @@
-Functions
------------
+# Functions
 
-### `gc_adapter_initialize(gc_adapter_t** adapter)`
+
+##### `gc_adapter_initialize(gc_adapter_t** adapter)` 
 
 
     Initializes the USB interface and creates a new adapter instance.
@@ -16,7 +16,7 @@ Functions
     Defined in `libgcadapter.h`
     
     
-### `gc_adapter_update(gc_adapter_t* adapter)`
+#### `gc_adapter_update(gc_adapter_t* adapter)`
 
 
     Updates the status of the adapter (`adapter->open` and `adapter->pad`).
@@ -34,7 +34,7 @@ Functions
     Defined in `libgcadapter.h`
     
     
-### `gc_pad_poll(gc_adapter_t* adapter, int port, gc_pad_state_t* state)`
+#### `gc_pad_poll(gc_adapter_t* adapter, int port, gc_pad_state_t* state)`
 
 
     Polls the state of the pad located at `port`.
@@ -58,7 +58,7 @@ Functions
     Defined in `libgcadapter.h`
     
     
-### `gc_pad_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble)`
+#### `gc_pad_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble)`
 
 
     Set the rumble value of the pad located at `port`.
@@ -76,7 +76,7 @@ Functions
     Defined in `libgcadapter.h`
     
     
-### `gc_adapter_free(gc_adapter_t* adapter)`
+#### `gc_adapter_free(gc_adapter_t* adapter)`
 
 
     Frees all resources used by the `adapter` and closes all open USB connections.
@@ -91,10 +91,10 @@ Functions
     Defined in `libgcadapter.h`
     
 
-Macros
------------
+# Macros
 
-### `GC_PAD_BTN_DOWN(state, btn)`
+
+#### `GC_PAD_BTN_DOWN(state, btn)`
 
 
     Expands to a statement which determines if the specified `btn` is held down in `state`.
@@ -103,7 +103,7 @@ Macros
     Defined in `gctypes.h`
     
     
-### `GC_PAD_RESET_STATE(state)`
+#### `GC_PAD_RESET_STATE(state)`
 
 
     Expands to a statement which resets a state to the default values.
@@ -136,7 +136,7 @@ Macros
     Defined in `gctypes.h`
     
     
-### `GC_PAD_STATES_EQUAL(st1, st2)`
+#### `GC_PAD_STATES_EQUAL(st1, st2)`
 
 
     Expands to a statement which determines if the `st1` is equal to `st2`.
