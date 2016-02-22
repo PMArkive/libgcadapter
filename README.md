@@ -40,6 +40,15 @@ Coming soon!
 Mac OS X is not supported.
 
 
+# Bindings
+
+
+Bindings for .NET are available at https://github.com/HannesMann/libgcadapter.NET.
+
+
+Feel free to create your own and send a pull request!
+
+
 # Thanks to
 
 
