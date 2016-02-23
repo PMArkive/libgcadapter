@@ -64,4 +64,12 @@ typedef struct
 } 
 gc_pad_state_t;
 
+typedef enum
+{
+    GC_PAD_NONE = 0,
+    GC_PAD_WIRED = 1,
+    GC_PAD_WIRELESS = 2
+}
+gc_pad_t;
+
 #endif

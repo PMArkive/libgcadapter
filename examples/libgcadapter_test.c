@@ -53,8 +53,6 @@ int main(int argc, char** argv)
         printw("libgcadapter Test Tool (libgcadapter %s).\n", LIBGCADAPTER_VERSION_STR);
         printw("GC adapter initialization successful.\n");
         
-        gc_pad_state_t state;
-        
         while(!recieved_sigint)
         {
             gc_adapter_update(adapter);
@@ -68,7 +66,8 @@ int main(int argc, char** argv)
                 mvprintw(1, 0, "Waiting for adapter...\n");
             }
             
-            gc_pad_poll(adapter, port, &state);
+            gc_adapter_poll(adapter);
+            
             printw("Port (%i):\n", port + 1);
             if(adapter->pad[port] == GC_PAD_NONE)
                 printw("  Port is empty.\n");
@@ -76,23 +75,26 @@ int main(int argc, char** argv)
                 printw("  Port is plugged in with a wired controller.\n");
             if(adapter->pad[port] == GC_PAD_WIRELESS)
                 printw("  Port is plugged in with a wireless controller.\n");
+                
             printw("  Buttons:\n");
-            printw("    A: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_A) ? "Down" : "Up");
-            printw("    B: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_B) ? "Down" : "Up");
-            printw("    X: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_X) ? "Down" : "Up");
-            printw("    Y: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_Y) ? "Down" : "Up");
-            printw("    Start: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_START) ? "Down" : "Up");
-            printw("    L: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_L) ? "Down" : "Up");
-            printw("    R: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_R) ? "Down" : "Up");
-            printw("    Z: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_Z) ? "Down" : "Up");
-            printw("    DPad Left: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_DPAD_LEFT) ? "Down" : "Up");
-            printw("    DPad Right: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_DPAD_RIGHT) ? "Down" : "Up");
-            printw("    DPad Up: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_DPAD_UP) ? "Down" : "Up");
-            printw("    DPad Down: %s\n", GC_PAD_BTN_DOWN(state, GC_PAD_BTN_DPAD_DOWN) ? "Down" : "Up");
+            printw("    A: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_A) ? "Down" : "Up");
+            printw("    B: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_B) ? "Down" : "Up");
+            printw("    X: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_X) ? "Down" : "Up");
+            printw("    Y: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_Y) ? "Down" : "Up");
+            printw("    Start: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_START) ? "Down" : "Up");
+            printw("    L: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_L) ? "Down" : "Up");
+            printw("    R: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_R) ? "Down" : "Up");
+            printw("    Z: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_Z) ? "Down" : "Up");
+            printw("    DPad Left: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_DPAD_LEFT) ? "Down" : "Up");
+            printw("    DPad Right: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_DPAD_RIGHT) ? "Down" : "Up");
+            printw("    DPad Up: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_DPAD_UP) ? "Down" : "Up");
+            printw("    DPad Down: %s\n", GC_PAD_BTN_DOWN(adapter->state[port], GC_PAD_BTN_DPAD_DOWN) ? "Down" : "Up");
+            
             printw("  Axises:\n");
-            printw("    Stick: [%3i %3i]\n", state.stick.x, state.stick.y);
-            printw("    CStick: [%3i %3i]\n", state.c_stick.x, state.c_stick.y);
-            printw("    Triggers: [%3i %3i]\n", state.triggers.x, state.triggers.y);
+            printw("    Stick: [%3i %3i]\n", adapter->state[port].stick.x, adapter->state[port].stick.y);
+            printw("    CStick: [%3i %3i]\n", adapter->state[port].c_stick.x, adapter->state[port].c_stick.y);
+            printw("    Triggers: [%3i %3i]\n", adapter->state[port].triggers.x, adapter->state[port].triggers.y);
+            
             refresh();
             usleep(1000 * 30);
         }

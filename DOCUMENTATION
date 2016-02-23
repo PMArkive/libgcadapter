@@ -27,7 +27,7 @@
       This function is responsible for claiming the USB interface to the adapter and for checking if the adapter is still open.
       This function should not be called too often, as it enumerates the entire USB device list every time it is called.
       Around once a second would be ideal.
-      Please note that this does not update adapter->pad, as that is done when the adapter is polled for input.
+      Please note that this does not update adapter->pad and adapter->state, as that is done when the adapter is polled for input.
       
       adapter - The adapter which should be updated.
       
@@ -36,22 +36,21 @@
       Defined in libgcadapter.h (1.0)
       
 
-  gc_pad_poll(gc_adapter_t* adapter, int port, gc_pad_state_t* state)
+  gc_adapter_poll(gc_adapter_t* adapter)
   
-      Polls the state of the controller located at port.
+      Polls the input state of the adapter.
       This function updates the types of controllers at adapter->pad. This is not done in gc_adapter_update due to technical limitations.
-      This function will always empty out the state, even if the adapter is not open or no controller is plugged into the specified port.
+      This function will always empty out all states, even if the adapter is not open or no controller is plugged into the specified port.
       This function should ideally be called on a separate thread to maximize performance.
       
       adapter - The adapter to poll from.
-      port - The port to poll from. This should be in the range of 0 to GC_ADAPTER_PORTS-1.
       
       Returns - Nothing.
       
-      Defined in libgcadapter.h (1.0)
+      Defined in libgcadapter.h (1.1)
       
 
-  gc_pad_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble)
+  gc_adapter_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble)
   
       Set the rumble value of the pad located at port.
       
@@ -60,7 +59,7 @@
       
       Returns - Nothing.
       
-      Defined in libgcadapter.h (1.0)
+      Defined in libgcadapter.h (1.1)
 
 
   gc_adapter_free(gc_adapter_t* adapter)
@@ -135,7 +134,7 @@
   
       Expands to a statement which determines if the specified btn is held down in state.
       
-      Defined in gctypes.h
+      Defined in gctypes.h (1.0)
 
 
   GC_PAD_RESET_STATE(state)
@@ -150,14 +149,14 @@
           state.triggers.x = 0
           state.triggers.y = 0
           
-     Defined in gctypes.h
+     Defined in gctypes.h (1.0)
 
 
   GC_PAD_STATES_EQUAL(st1, st2)
   
       Expands to a statement which determines if st1 is equal to st2.
       
-      Defined in gctypes.h
+      Defined in gctypes.h (1.0)
       
       
   GC_PAD_AXIS_CENTERED(axis)
@@ -165,14 +164,14 @@
       Expands to a statement which determines if axis is COMPLETELY centered.
       Do note that the axises on a real GameCube controller are almost never completely centered.
       
-      Defined in gctypes.h
+      Defined in gctypes.h (1.0.1)
       
       
   GC_PAD_AXISES_EQUAL(ax1, ax2)
   
       Expands to a statement which determines if ax1 is equal to ax2.
       
-      Defined in gctypes.h
+      Defined in gctypes.h (1.0.1)
 
 
 -- TYPES --
@@ -196,7 +195,7 @@
       GC_PAD_BTN_Y - The Y button.
       GC_PAD_BTN_START - The start button.
       
-      Defined in gctypes.h
+      Defined in gctypes.h (1.0)
       
       
   gc_pad_axis_t
@@ -207,7 +206,7 @@
       Stick axises map the horizontal value to x and the vertical value to y, and goes 
       from GC_PAD_STICK_CENTER to 0 and 255, which determines in what direction and how much the stick is held.
       
-      Defined in gctypes.h
+      Defined in gctypes.h (1.0)
       
       
   gc_pad_state_t
@@ -220,19 +219,19 @@
       c_stick - The c-stick axis.
       triggers - The L and R trigger.
       
-      Defined in gctypes.h
+      Defined in gctypes.h (1.0)
 
 
   gc_pad_t
   
       Determines the type of a controller in an adapter port.
-      Do note that only wired controllers can be used with gc_pad_set_rumble(adapter, port, rumble).
+      Do note that only wired controllers can be used with gc_adapter_set_rumble(adapter, port, rumble).
       
       GC_PAD_NONE - No controller is plugged into this port.
       GC_PAD_WIRED - A wired controller is plugged into this port.
       GC_PAD_WIRELESS - A wireless controller is plugged into this port.
       
-      Defined in libgcadapter.h
+      Defined in gctypes.h (1.1), libgcadapter.h (1.0-1.0.2)
       
       
   gc_adapter_t
@@ -240,16 +239,18 @@
       An instance of a Wii U GameCube Adapter.
       This structure contains many values, but the only ones which should be directly accessed
       by external applications are adapter->open, adapter->pad and adapter->rumble. The other
-      values are used for keeping track of open USB connections and other state.
+      values are used for keeping track of open USB connections and other internal state.
       
       open - If this adapter instance has an open USB connection to an adapter.
       pad - An array which states what type of controller is plugged into the ports on the adapter.
             This should be accessed in the range of 0 to GC_ADAPTER_PORTS-1.
+      state - An array which contains the state of a port after the adapter has been polled.
+              This should be accessed in the range of 0 to GC_ADAPTER_PORTS-1.
       rumble - Determines the current rumbling of a controller in a port. 
-               This should not be modified directly, but should be set via gc_pad_set_rumble(adapter, port, rumble). 
+               This should not be modified directly, but should be set via gc_adapter_set_rumble(adapter, port, rumble). 
                This should be accessed in the range of 0 to GC_ADAPTER_PORTS-1.
       
-      Defined in libgcadapter.h
+      Defined in libgcadapter.h (1.0)
 
 
 -- EXAMPLES --
@@ -265,6 +266,7 @@
               while(!adapter->open)
               {
                   gc_adapter_update(adapter);
+                  gc_adapter_poll(adapter);
               }
               gc_adapter_free(adapter);
               return 0;
@@ -278,9 +280,8 @@
      
   Determine if the A button is held down on the controller in the first port.
  
-      gc_pad_state state;
-      gc_pad_poll(adapter, 0, &state);
-      bool down = GC_PAD_BTN_DOWN(state, GC_PAD_BTN_A);
+      gc_adapter_poll(adapter);
+      bool down = GC_PAD_BTN_DOWN(adapter->state[0], GC_PAD_BTN_A);
       
      
   Rumble the controller in the first port if the A button is held down.
@@ -288,8 +289,8 @@
       gc_pad_state state;
       while(adapter->open)
       {
-          gc_pad_poll(adapter, 0, &state);
-          gc_pad_set_rumble(adapter, 0, GC_PAD_BTN_DOWN(state, GC_PAD_BTN_A) ? 255 : 0);
+          gc_adapter_poll(adapter);
+          gc_adapter_set_rumble(adapter, 0, GC_PAD_BTN_DOWN(adapter->state[0], GC_PAD_BTN_A) ? 255 : 0);
       }
 
 
