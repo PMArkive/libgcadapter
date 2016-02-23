@@ -55,7 +55,7 @@ gc_pad_axis_t;
         
 #define GC_PAD_AXISES_EQUAL(ax1, ax2) \
         ax1.x == ax2.x && \
-        ax1.y == ax2.y &&
+        ax1.y == ax2.y
 
 typedef struct
 {

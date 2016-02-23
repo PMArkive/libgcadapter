@@ -163,7 +163,7 @@ void gc_pad_poll(gc_adapter_t* adapter, int port, gc_pad_state_t* state)
     if(adapter->open)
     {
         int transferred;
-        libusb_interrupt_transfer(adapter->usb_device_handle, adapter->usb_endpoint_read, adapter->usb_recv_data, GC_ADAPTER_PAYLOAD_SIZE, &transferred, 100);
+       	libusb_interrupt_transfer(adapter->usb_device_handle, adapter->usb_endpoint_read, adapter->usb_recv_data, GC_ADAPTER_PAYLOAD_SIZE, &transferred, 100);
         gc_pad_t type = adapter->usb_recv_data[1 + (9 * port)] >> 4;
         adapter->pad[port] = type;
         if(adapter->pad[port] != GC_PAD_NONE)

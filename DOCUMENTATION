@@ -232,7 +232,7 @@
       GC_PAD_WIRED - A wired controller is plugged into this port.
       GC_PAD_WIRELESS - A wireless controller is plugged into this port.
       
-      Defined in libgcadapter.h
+      Defined in gctypes.h (libgcadapter.h < 1.0.3)
       
       
   gc_adapter_t
