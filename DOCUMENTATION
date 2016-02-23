@@ -25,8 +25,6 @@
 
       Updates the status of the adapter (adapter->open).
       This function is responsible for claiming the USB interface to the adapter and for checking if the adapter is still open.
-      This function should not be called too often, as it enumerates the entire USB device list every time it is called.
-      Around once a second would be ideal.
       Please note that this does not update adapter->pad and adapter->state, as that is done when the adapter is polled for input.
       
       adapter - The adapter which should be updated.
@@ -41,7 +39,6 @@
       Polls the input state of the adapter.
       This function updates the types of controllers at adapter->pad. This is not done in gc_adapter_update due to technical limitations.
       This function will always empty out all states, even if the adapter is not open or no controller is plugged into the specified port.
-      This function should ideally be called on a separate thread to maximize performance.
       
       adapter - The adapter to poll from.
       
@@ -238,7 +235,7 @@
   
       An instance of a Wii U GameCube Adapter.
       This structure contains many values, but the only ones which should be directly accessed
-      by external applications are adapter->open, adapter->pad and adapter->rumble. The other
+      by external applications are adapter->open, adapter->state, adapter->pad and adapter->rumble. The other
       values are used for keeping track of open USB connections and other internal state.
       
       open - If this adapter instance has an open USB connection to an adapter.
