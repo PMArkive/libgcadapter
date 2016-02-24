@@ -4,8 +4,8 @@
 #ifndef LIBGCADAPTER_H
 #define LIBGCADAPTER_H
 
-#define LIBGCADAPTER_VERSION 110
-#define LIBGCADAPTER_VERSION_STR "1.1"
+#define LIBGCADAPTER_VERSION 111
+#define LIBGCADAPTER_VERSION_STR "1.1.1"
 
 #define GC_ADAPTER_USB_VID 0x057e
 #define GC_ADAPTER_USB_PID 0x0337
@@ -14,14 +14,15 @@
 
 typedef struct
 {
-    /* public */
+    // public
     bool open;
+    bool reserved;
     gc_pad_t pad[GC_ADAPTER_PORTS];
     gc_pad_state_t state[GC_ADAPTER_PORTS];
     uint8_t rumble[GC_ADAPTER_PORTS];
     
-    /* private, don't use these */
-    /* use them for debugging if you want though */
+    // private, don't use these
+    // use them for debugging if you want though
     uint8_t usb_recv_data[GC_ADAPTER_PAYLOAD_SIZE];
     void* usb_context;
     void* usb_device_handle;

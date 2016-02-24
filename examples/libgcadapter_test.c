@@ -63,7 +63,7 @@ int main(int argc, char** argv)
             }
             else
             {
-                mvprintw(1, 0, "Waiting for adapter...\n");
+                mvprintw(1, 0, "Waiting for adapter%s...\n", adapter->reserved ? " (connected but reserved)" : "");
             }
             
             gc_adapter_poll(adapter);

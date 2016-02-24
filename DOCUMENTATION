@@ -235,10 +235,11 @@
   
       An instance of a Wii U GameCube Adapter.
       This structure contains many values, but the only ones which should be directly accessed
-      by external applications are adapter->open, adapter->state, adapter->pad and adapter->rumble. The other
+      by external applications are adapter->open, adapter->reserved, adapter->state, adapter->pad and adapter->rumble. The other
       values are used for keeping track of open USB connections and other internal state.
       
       open - If this adapter instance has an open USB connection to an adapter.
+      reserved - If an adapter is plugged into the computer, but it is already claimed by another application.
       pad - An array which states what type of controller is plugged into the ports on the adapter.
             This should be accessed in the range of 0 to GC_ADAPTER_PORTS-1.
       state - An array which contains the state of a port after the adapter has been polled.
@@ -247,7 +248,7 @@
                This should not be modified directly, but should be set via gc_adapter_set_rumble(adapter, port, rumble). 
                This should be accessed in the range of 0 to GC_ADAPTER_PORTS-1.
       
-      Defined in libgcadapter.h (1.0)
+      Defined in libgcadapter.h (1.0, 1.1.1)
 
 
 -- EXAMPLES --

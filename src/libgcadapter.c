@@ -12,6 +12,7 @@ bool gc_adapter_initialize(gc_adapter_t** adapter)
 {
     *adapter = malloc(sizeof(gc_adapter_t));
     (*adapter)->open = false;
+    (*adapter)->reserved = false;
     (*adapter)->usb_device_handle = 0;
     (*adapter)->usb_endpoint_read = 0;
     (*adapter)->usb_endpoint_write = 0;
@@ -89,6 +90,8 @@ void gc_try_open_usb(gc_adapter_t* adapter, libusb_device* device)
         ret_libusb = libusb_claim_interface(handle, 0);
         if(ret_libusb < 0)
         {
+        	// if we can't claim the interface then the adapter is probably reserved.
+        	adapter->reserved = true;
             gc_adapter_close_usb(adapter);
             return;
         }
@@ -121,6 +124,7 @@ void gc_try_open_usb(gc_adapter_t* adapter, libusb_device* device)
         libusb_interrupt_transfer(handle, adapter->usb_endpoint_write, &send, sizeof(send), &tmp, 100);
         
         adapter->open = true;
+        adapter->reserved = false;
     }
 }
 
@@ -131,6 +135,9 @@ void gc_adapter_update(gc_adapter_t* adapter)
     libusb_device** devices;
     ssize_t n_devices = libusb_get_device_list(context, &devices);
     bool found = false;
+    
+    adapter->reserved = false;
+    
     if(n_devices > 0)
     {
         for(int i = 0; i < n_devices; i++)
@@ -143,6 +150,7 @@ void gc_adapter_update(gc_adapter_t* adapter)
             }
         }
     }
+    
     libusb_free_device_list(devices, 1);
     
     if(!found && adapter->open)
@@ -170,7 +178,7 @@ void gc_adapter_poll(gc_adapter_t* adapter)
             adapter->pad[port] = type;
             if(adapter->pad[port] != GC_PAD_NONE)
             {
-                  uint8_t buttons_p1 = adapter->usb_recv_data[1 + (9 * port) + 1];
+                uint8_t buttons_p1 = adapter->usb_recv_data[1 + (9 * port) + 1];
                 uint8_t buttons_p2 = adapter->usb_recv_data[1 + (9 * port) + 2];
             
                 state->buttons = GC_PAD_BTN_NONE;
@@ -196,19 +204,19 @@ void gc_adapter_poll(gc_adapter_t* adapter)
                 state->c_stick.y = adapter->usb_recv_data[1 + (9 * port) + 6];
                 state->triggers.x = adapter->usb_recv_data[1 + (9 * port) + 7];
                 state->triggers.y = adapter->usb_recv_data[1 + (9 * port) + 8];
-               }
+            }
             else
             {
-                   GC_PAD_RESET_STATE((*state));
-               }
+                GC_PAD_RESET_STATE((*state));
+            }
         }
     }
     else
     {
         for(int port = 0; port < GC_ADAPTER_PORTS; port++)
         {
-               GC_PAD_RESET_STATE(adapter->state[port]);
-           }
+            GC_PAD_RESET_STATE(adapter->state[port]);
+        }
     }    
 }
 
