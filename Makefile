@@ -24,4 +24,4 @@ clean:
 	-rm bin/libgcadapter.a
 	-rm bin/libgcadapter.so
 	-rm bin/libgcadapter_test
-	-rmdir bin
+	-rm -rf bin
