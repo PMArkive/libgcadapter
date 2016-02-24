@@ -90,8 +90,8 @@ void gc_try_open_usb(gc_adapter_t* adapter, libusb_device* device)
         ret_libusb = libusb_claim_interface(handle, 0);
         if(ret_libusb < 0)
         {
-        	// if we can't claim the interface then the adapter is probably reserved.
-        	adapter->reserved = true;
+            // if we can't claim the interface then the adapter is probably reserved.
+            adapter->reserved = true;
             gc_adapter_close_usb(adapter);
             return;
         }
