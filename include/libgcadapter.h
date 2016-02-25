@@ -31,11 +31,21 @@ typedef struct
 }
 gc_adapter_t;
 
-int gc_adapter_get_version();
-bool gc_adapter_initialize(gc_adapter_t** adapter);
-void gc_adapter_update(gc_adapter_t* adapter);
-void gc_adapter_poll(gc_adapter_t* adapter);
-void gc_adapter_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble);
-void gc_adapter_free(gc_adapter_t* adapter);
+#if _WIN32
+#if LIBGCADAPTER_EXPORTS
+    #define LIBGCADAPTER_API __declspec(dllexport)
+#else
+    #define LIBGCADAPTER_API __declspec(dllimport)
+#endif
+#else
+    #define LIBGCADAPTER_API 
+#endif
+
+LIBGCADAPTER_API int gc_adapter_get_version();
+LIBGCADAPTER_API bool gc_adapter_initialize(gc_adapter_t** adapter);
+LIBGCADAPTER_API void gc_adapter_update(gc_adapter_t* adapter);
+LIBGCADAPTER_API void gc_adapter_poll(gc_adapter_t* adapter);
+LIBGCADAPTER_API void gc_adapter_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble);
+LIBGCADAPTER_API void gc_adapter_free(gc_adapter_t* adapter);
 
 #endif

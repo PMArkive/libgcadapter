@@ -3,12 +3,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int gc_adapter_get_version()
+LIBGCADAPTER_API int gc_adapter_get_version()
 {
     return LIBGCADAPTER_VERSION;
 }
 
-bool gc_adapter_initialize(gc_adapter_t** adapter)
+LIBGCADAPTER_API bool gc_adapter_initialize(gc_adapter_t** adapter)
 {
     *adapter = malloc(sizeof(gc_adapter_t));
     (*adapter)->open = false;
@@ -40,7 +40,7 @@ bool gc_adapter_initialize(gc_adapter_t** adapter)
     return true;
 }
 
-bool gc_is_adapter(libusb_device* device)
+LIBGCADAPTER_API bool gc_is_adapter(libusb_device* device)
 {
     struct libusb_device_descriptor descriptor;
     
@@ -55,7 +55,7 @@ bool gc_is_adapter(libusb_device* device)
 }
 
 
-void gc_adapter_close_usb(gc_adapter_t* adapter)
+LIBGCADAPTER_API void gc_adapter_close_usb(gc_adapter_t* adapter)
 {
     for(int i = 0; i < GC_ADAPTER_PORTS; i++)
     {
@@ -71,7 +71,7 @@ void gc_adapter_close_usb(gc_adapter_t* adapter)
     adapter->open = false;
 }
 
-void gc_try_open_usb(gc_adapter_t* adapter, libusb_device* device)
+LIBGCADAPTER_API void gc_try_open_usb(gc_adapter_t* adapter, libusb_device* device)
 {    
     int ret_libusb = libusb_open(device, (libusb_device_handle**)(&adapter->usb_device_handle));
     if (ret_libusb == 0) 
@@ -128,7 +128,7 @@ void gc_try_open_usb(gc_adapter_t* adapter, libusb_device* device)
     }
 }
 
-void gc_adapter_update(gc_adapter_t* adapter)
+LIBGCADAPTER_API void gc_adapter_update(gc_adapter_t* adapter)
 {
     libusb_context* context = (libusb_context*)adapter->usb_context;
     
@@ -165,7 +165,7 @@ void gc_adapter_update(gc_adapter_t* adapter)
     }
 }
 
-void gc_adapter_poll(gc_adapter_t* adapter)
+LIBGCADAPTER_API void gc_adapter_poll(gc_adapter_t* adapter)
 {
     if(adapter->open)
     {
@@ -220,7 +220,7 @@ void gc_adapter_poll(gc_adapter_t* adapter)
     }    
 }
 
-void gc_adapter_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble)
+LIBGCADAPTER_API void gc_adapter_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble)
 {
     if(port < 0 || port >= GC_ADAPTER_PORTS)
         return;
@@ -233,7 +233,7 @@ void gc_adapter_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble)
     }
 }
 
-void gc_adapter_free(gc_adapter_t* adapter)
+LIBGCADAPTER_API void gc_adapter_free(gc_adapter_t* adapter)
 {
     if(adapter->open)
         gc_adapter_close_usb(adapter);

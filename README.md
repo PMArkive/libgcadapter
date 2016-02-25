@@ -31,7 +31,7 @@ A shared and static library will be created in bin/.
 # Building on Windows
 
 
-Coming soon!
+Open `msvc\libgcadapter\libgcadapter.sln` and build the desired target.
 
 
 # Building on Mac OS X
