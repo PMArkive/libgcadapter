@@ -31,8 +31,8 @@ typedef struct
 }
 gc_adapter_t;
 
-#if _WIN32
-#if LIBGCADAPTER_EXPORTS
+#ifdef _WIN32
+#ifdef LIBGCADAPTER_EXPORTS
     #define LIBGCADAPTER_API __declspec(dllexport)
 #else
     #define LIBGCADAPTER_API __declspec(dllimport)
