@@ -10,8 +10,6 @@ A library for interfacing with the Wii U GameCube Adapter.
 Initialize the adapter with `gc_adapter_initialize`, then update the status (`gc_adapter_update`) and poll (`gc_pad_poll`) repeatedly until exit (`gc_adapter_free`).
 
 
-It is advised to run `gc_pad_poll` on a separate thread to maximize performance.
-
 
 Full documentation can be found in `DOCUMENTATION`.
 
