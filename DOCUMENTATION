@@ -39,6 +39,7 @@
       Polls the input state of the adapter.
       This function updates the types of controllers at adapter->pad. This is not done in gc_adapter_update due to technical limitations.
       This function will always empty out all states, even if the adapter is not open or no controller is plugged into the specified port.
+      Please note that this function is blocking, and will not return until data has been recieved from the adapter (as long as it is connected).
       
       adapter - The adapter to poll from.
       
