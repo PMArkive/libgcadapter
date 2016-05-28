@@ -32,30 +32,30 @@ gc_pad_axis_t;
 #define GC_PAD_BTN_DOWN(state, btn) (state.buttons & btn) == btn
 
 #define GC_PAD_AXIS_CENTERED(axis) \
-        axis.x == GC_PAD_STICK_CENTER && \
-        axis.Y == GC_PAD_STICK_CENTER
+        { axis.x == GC_PAD_STICK_CENTER && \
+        axis.Y == GC_PAD_STICK_CENTER }
 
 #define GC_PAD_RESET_STATE(state) \
-        state.buttons = (gc_pad_btn_t)0; \
+        { state.buttons = (gc_pad_btn_t)0; \
         state.stick.x = GC_PAD_STICK_CENTER; \
         state.stick.y = GC_PAD_STICK_CENTER; \
         state.c_stick.x = GC_PAD_STICK_CENTER; \
         state.c_stick.y = GC_PAD_STICK_CENTER; \
         state.triggers.x = 0; \
-        state.triggers.y = 0;
+        state.triggers.y = 0; }
     
 #define GC_PAD_STATES_EQUAL(st1, st2) \
-        st1.buttons == st2.buttons && \
+        { st1.buttons == st2.buttons && \
         st1.stick.x == st2.stick.x && \
         st1.stick.y == st2.stick.y && \
         st1.c_stick.x == st2.c_stick.x && \
         st1.c_stick.y == st2.c_stick.y && \
         st1.triggers.x == st2.triggers.x && \
-        st1.triggers.y == st2.triggers.y
+        st1.triggers.y == st2.triggers.y }
         
 #define GC_PAD_AXISES_EQUAL(ax1, ax2) \
-        ax1.x == ax2.x && \
-        ax1.y == ax2.y
+        { ax1.x == ax2.x && \
+        ax1.y == ax2.y }
 
 typedef struct
 {
