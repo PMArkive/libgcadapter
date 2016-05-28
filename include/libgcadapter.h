@@ -1,5 +1,5 @@
 #include <stdbool.h>
-#include <gctypes.h>
+#include "gctypes.h"
 
 #ifndef LIBGCADAPTER_H
 #define LIBGCADAPTER_H
@@ -41,6 +41,11 @@ gc_adapter_t;
     #define LIBGCADAPTER_API 
 #endif
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 LIBGCADAPTER_API int gc_adapter_get_version();
 LIBGCADAPTER_API bool gc_adapter_initialize(gc_adapter_t** adapter);
 LIBGCADAPTER_API void gc_adapter_update(gc_adapter_t* adapter);
@@ -48,4 +53,7 @@ LIBGCADAPTER_API void gc_adapter_poll(gc_adapter_t* adapter);
 LIBGCADAPTER_API void gc_adapter_set_rumble(gc_adapter_t* adapter, int port, uint8_t rumble);
 LIBGCADAPTER_API void gc_adapter_free(gc_adapter_t* adapter);
 
+#ifdef __cplusplus
+}
+#endif
 #endif

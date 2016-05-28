@@ -36,7 +36,7 @@ gc_pad_axis_t;
         axis.Y == GC_PAD_STICK_CENTER
 
 #define GC_PAD_RESET_STATE(state) \
-        state.buttons = 0; \
+        state.buttons = (gc_pad_btn_t)0; \
         state.stick.x = GC_PAD_STICK_CENTER; \
         state.stick.y = GC_PAD_STICK_CENTER; \
         state.c_stick.x = GC_PAD_STICK_CENTER; \
