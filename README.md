@@ -1,7 +1,7 @@
 # libgcadapter
 
 
-A library for interfacing with the Wii U GameCube Adapter.
+A library for communicating with the Wii U GameCube Adapter.
 
 
 # Usage
